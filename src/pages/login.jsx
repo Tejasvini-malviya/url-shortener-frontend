@@ -1,162 +1,222 @@
-import React from 'react';
-import { Box, Button, TextField, Typography, Container, Link } from '@mui/material';
+import React, { useState } from 'react';
+import { Box, Button, TextField, Typography, Paper } from '@mui/material';
 import { motion } from 'framer-motion';
 import { useNavigate } from 'react-router-dom';
 
+
+
 const Login = () => {
   const navigate = useNavigate();
+  const [email, setEmail] = useState('');
+  const [password, setPassword] = useState('');
+
+  const handleLogin = (e) => {
+    e.preventDefault();
+    // Simulate login - navigate to homepage
+    navigate('/home');
+  };
+
+  // Floating elements animation
+  const floatingAnimation = {
+    y: [0, -20, 0],
+    transition: {
+      duration: 3,
+      repeat: Infinity,
+      ease: "easeInOut"
+    }
+  };
+
+
+
+
 
   return (
     <Box
       sx={{
         minHeight: '100vh',
-        background: '#F0F9FF', // Very light blue background to match Signup
+        background: 'linear-gradient(135deg, #E3F2FD 0%, #BBDEFB 100%)',
         display: 'flex',
         alignItems: 'center',
         justifyContent: 'center',
-        padding: 3,
+        padding: '2rem',
         position: 'relative',
-        overflow: 'hidden',
-        color: '#1E293B'
+        overflow: 'hidden'
       }}
     >
-      {/* Decorative Elements - matching the style of Signup but maybe different placement */}
+      {/* Floating Background Elements */}
       <motion.div
-        initial={{ x: -100, opacity: 0 }}
-        animate={{ x: 0, opacity: 0.5 }}
-        transition={{ duration: 1.5, repeat: Infinity, repeatType: "reverse" }}
+        animate={floatingAnimation}
         style={{
           position: 'absolute',
-          bottom: -50,
-          left: -50,
-          width: 200,
-          height: 200,
-          background: 'radial-gradient(circle, rgba(56, 189, 248, 0.2) 0%, rgba(255,255,255,0) 70%)',
+          top: '10%',
+          left: '15%',
+          width: '100px',
+          height: '100px',
           borderRadius: '50%',
-          filter: 'blur(30px)',
+          background: 'rgba(255, 255, 255, 0.3)',
+          zIndex: 0
+        }}
+      />
+      <motion.div
+        animate={{ ...floatingAnimation, transition: { ...floatingAnimation.transition, delay: 0.5 } }}
+        style={{
+          position: 'absolute',
+          top: '70%',
+          right: '10%',
+          width: '80px',
+          height: '80px',
+          borderRadius: '50%',
+          background: 'rgba(255, 255, 255, 0.25)',
+          zIndex: 0
+        }}
+      />
+      <motion.div
+        animate={{ ...floatingAnimation, transition: { ...floatingAnimation.transition, delay: 1 } }}
+        style={{
+          position: 'absolute',
+          bottom: '10%',
+          left: '10%',
+          width: '120px',
+          height: '120px',
+          borderRadius: '50%',
+          background: 'rgba(255, 255, 255, 0.2)',
+          zIndex: 0
         }}
       />
 
-      <Container maxWidth="xs" sx={{ zIndex: 1, display: 'flex', flexDirection: 'column' }}>
-        <motion.div
-          initial={{ y: -20, opacity: 0 }}
-          animate={{ y: 0, opacity: 1 }}
-          transition={{ duration: 0.5 }}
+      {/* Login Card */}
+      <motion.div
+        initial={{ opacity: 0, y: 20 }}
+        animate={{ opacity: 1, y: 0 }}
+        transition={{ duration: 0.6, ease: "easeOut" }}
+        style={{ zIndex: 1, width: '100%', maxWidth: '450px' }}
+      >
+        <Paper
+          elevation={3}
+          sx={{
+            padding: '3rem',
+            borderRadius: '24px',
+            background: 'white',
+            boxShadow: '0 8px 32px rgba(0, 0, 0, 0.08)'
+          }}
         >
-          <Typography variant="h4" component="h1" sx={{ fontWeight: 'bold', mb: 1, textAlign: 'center' }}>
+          <Typography
+            variant="h4"
+            sx={{
+              fontWeight: 700,
+              color: '#1976D2',
+              marginBottom: '0.5rem',
+              fontFamily: "'Inter', sans-serif",
+              textAlign: 'center'
+            }}
+          >
             Welcome Back
           </Typography>
-        </motion.div>
-
-        <motion.div
-          initial={{ y: -20, opacity: 0 }}
-          animate={{ y: 0, opacity: 1 }}
-          transition={{ duration: 0.5, delay: 0.1 }}
-        >
-          <Typography variant="body2" sx={{ color: '#64748B', mb: 4, textAlign: 'center' }}>
+          <Typography
+            variant="body1"
+            sx={{
+              color: '#666',
+              marginBottom: '2.5rem',
+              textAlign: 'center'
+            }}
+          >
             Login to continue to your URL shortener
           </Typography>
-        </motion.div>
 
-        <Box component="form" sx={{ display: 'flex', flexDirection: 'column', gap: 2 }}>
-          <motion.div
-            initial={{ x: -20, opacity: 0 }}
-            animate={{ x: 0, opacity: 1 }}
-            transition={{ duration: 0.5, delay: 0.2 }}
-          >
+          <Box component="form" onSubmit={handleLogin}>
+            {/* Email Input */}
             <TextField
+              fullWidth
               label="Email"
               type="email"
-              variant="standard"
-              fullWidth
-              InputProps={{
-                disableUnderline: false,
-                sx: { color: '#334155' }
-              }}
-              InputLabelProps={{
-                sx: { color: '#94A3B8' }
-              }}
+              value={email}
+              onChange={(e) => setEmail(e.target.value)}
+              required
               sx={{
-                '& .MuiInput-underline:before': { borderBottomColor: '#CBD5E1' },
-                '& .MuiInput-underline:hover:not(.Mui-disabled):before': { borderBottomColor: '#94A3B8' },
-                '& .MuiInput-underline:after': { borderBottomColor: '#38BDF8' },
-              }}
-            />
-          </motion.div>
-
-          <motion.div
-            initial={{ x: -20, opacity: 0 }}
-            animate={{ x: 0, opacity: 1 }}
-            transition={{ duration: 0.5, delay: 0.3 }}
-          >
-            <TextField
-              label="Password"
-              type="password"
-              variant="standard"
-              fullWidth
-              InputProps={{
-                disableUnderline: false,
-                sx: { color: '#334155' }
-              }}
-              InputLabelProps={{
-                sx: { color: '#94A3B8' }
-              }}
-              sx={{
-                '& .MuiInput-underline:before': { borderBottomColor: '#CBD5E1' },
-                '& .MuiInput-underline:hover:not(.Mui-disabled):before': { borderBottomColor: '#94A3B8' },
-                '& .MuiInput-underline:after': { borderBottomColor: '#38BDF8' },
-              }}
-            />
-          </motion.div>
-
-          <motion.div
-            initial={{ y: 20, opacity: 0 }}
-            animate={{ y: 0, opacity: 1 }}
-            transition={{ duration: 0.5, delay: 0.4 }}
-            style={{ marginTop: '20px' }}
-          >
-            <Button
-              fullWidth
-              variant="contained"
-              size="large"
-              sx={{
-                backgroundColor: '#BAE6FD',
-                color: '#1E293B',
-                borderRadius: '50px',
-                textTransform: 'none',
-                fontWeight: 600,
-                boxShadow: 'none',
-                '&:hover': {
-                  backgroundColor: '#7DD3FC',
-                  boxShadow: 'none'
+                marginBottom: '1.5rem',
+                '& .MuiOutlinedInput-root': {
+                  borderRadius: '16px',
+                  '&:hover fieldset': {
+                    borderColor: '#42A5F5'
+                  },
+                  '&.Mui-focused fieldset': {
+                    borderColor: '#1976D2'
+                  }
                 }
               }}
-            >
-              Log In
-            </Button>
-          </motion.div>
-        </Box>
+            />
 
-        <motion.div
-          initial={{ opacity: 0 }}
-          animate={{ opacity: 1 }}
-          transition={{ duration: 0.5, delay: 0.5 }}
-          style={{ marginTop: '20px', textAlign: 'center' }}
-        >
-          <Typography variant="body2" color="text.secondary">
-            Don't have an account?{' '}
-            <Link
-              component="button"
+            {/* Password Input */}
+            <TextField
+              fullWidth
+              label="Password"
+              type="password"
+              value={password}
+              onChange={(e) => setPassword(e.target.value)}
+              required
+              sx={{
+                marginBottom: '2rem',
+                '& .MuiOutlinedInput-root': {
+                  borderRadius: '16px',
+                  '&:hover fieldset': {
+                    borderColor: '#42A5F5'
+                  },
+                  '&.Mui-focused fieldset': {
+                    borderColor: '#1976D2'
+                  }
+                }
+              }}
+            />
+
+            {/* Login Button */}
+            <motion.div whileHover={{ scale: 1.02 }} whileTap={{ scale: 0.98 }}>
+              <Button
+                fullWidth
+                type="submit"
+                variant="contained"
+                sx={{
+                  borderRadius: '16px',
+                  padding: '1rem',
+                  background: 'linear-gradient(135deg, #42A5F5 0%, #1976D2 100%)',
+                  color: 'white',
+                  fontWeight: 600,
+                  textTransform: 'none',
+                  fontSize: '1.1rem',
+                  marginBottom: '1.5rem',
+                  boxShadow: '0 4px 12px rgba(25, 118, 210, 0.3)'
+                }}
+              >
+                Log In
+              </Button>
+            </motion.div>
+
+            {/* Sign Up Link */}
+            <Typography
               variant="body2"
-              onClick={() => navigate('/signup')}
-              sx={{ color: '#0F172A', fontWeight: 'bold', textDecoration: 'none' }}
+              sx={{
+                textAlign: 'center',
+                color: '#666'
+              }}
             >
-              Sign Up
-            </Link>
-          </Typography>
-        </motion.div>
-
-      </Container>
+              Don't have an account?{' '}
+              <Typography
+                component="span"
+                onClick={() => navigate('/signup')}
+                sx={{
+                  color: '#1976D2',
+                  fontWeight: 600,
+                  cursor: 'pointer',
+                  '&:hover': {
+                    textDecoration: 'underline'
+                  }
+                }}
+              >
+                Sign Up
+              </Typography>
+            </Typography>
+          </Box>
+        </Paper>
+      </motion.div>
     </Box>
   );
 };
