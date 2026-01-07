@@ -1,70 +1,132 @@
-# Getting Started with Create React App
+# URL Shortener Frontend
 
-This project was bootstrapped with [Create React App](https://github.com/facebook/create-react-app).
+A modern, beautiful URL shortener web application built with React, featuring a stunning pastel blue design with smooth animations.
 
-## Available Scripts
+## 🎨 Design Features
 
-In the project directory, you can run:
+- **Modern Pastel Blue Theme**: Soft, eye-pleasing gradient background with light blue accents
+- **Split-Card Layout**: Two elegant white cards with rounded corners and soft shadows
+- **Smooth Animations**: Framer Motion powered animations including:
+  - Card slide-in effects on page load
+  - Button hover and tap animations
+  - Floating background elements
+  - Copy success animations
+- **Fully Responsive**: Adapts beautifully to desktop and mobile devices
 
-### `npm start`
+## 🛠️ Tech Stack
 
-Runs the app in the development mode.\
-Open [http://localhost:3000](http://localhost:3000) to view it in your browser.
+- **React** (v19.2.3) - UI library
+- **Vite** (v5.0.0) - Build tool and dev server
+- **Material UI** (v7.3.6) - Component library
+- **Framer Motion** (v12.24.7) - Animation library
+- **React Router** (v7.11.0) - Client-side routing
 
-The page will reload when you make changes.\
-You may also see any lint errors in the console.
+## 📄 Pages
 
-### `npm test`
+### Homepage (`/`)
+The main URL shortener interface featuring:
 
-Launches the test runner in the interactive watch mode.\
-See the section about [running tests](https://facebook.github.io/create-react-app/docs/running-tests) for more information.
+**Left Card - Introduction**
+- "Shorten Your Links" heading
+- Descriptive subtitle: "Fast, secure & reliable URL shortener"
+- Custom-generated flat vector illustration
+- Floating decorative elements (circles, clouds)
+- Two action buttons: "Get Started" and "Shorten URL"
+
+**Right Card - URL Shortener Form**
+- Long URL input field
+- Optional custom alias input
+- "Generate Short Link" button
+- Result display with shortened URL
+- Copy-to-clipboard button with success animation
+- Helper text: "Free & instant link shortening"
+
+### Login (`/login`)
+User authentication page
+
+### Signup (`/signup`)
+User registration page
+
+### Welcome (`/welcome`)
+Post-authentication welcome screen
+
+## 🚀 Getting Started
+
+### Prerequisites
+- Node.js (v14 or higher)
+- npm or yarn
+
+### Installation
+
+1. Clone the repository:
+```bash
+git clone <repository-url>
+cd url-shortener-frontend
+```
+
+2. Install dependencies:
+```bash
+npm install
+```
+
+3. Start the development server:
+```bash
+npm run dev
+```
+
+The application will open at [http://localhost:5173](http://localhost:5173)
+
+## 📜 Available Scripts
+
+### `npm run dev`
+Runs the app in development mode using Vite.  
+Open [http://localhost:5173](http://localhost:5173) to view it in your browser.
 
 ### `npm run build`
+Builds the app for production to the `dist` folder.  
+The build is optimized for best performance.
 
-Builds the app for production to the `build` folder.\
-It correctly bundles React in production mode and optimizes the build for the best performance.
+### `npm run preview`
+Preview the production build locally.
 
-The build is minified and the filenames include the hashes.\
-Your app is ready to be deployed!
+## 🎯 Key Features
 
-See the section about [deployment](https://facebook.github.io/create-react-app/docs/deployment) for more information.
+- ✨ Beautiful, modern UI with pastel aesthetics
+- 🎭 Smooth animations and transitions
+- 📱 Fully responsive design
+- 🎨 Custom vector illustrations
+- 📋 One-click copy to clipboard
+- 🔒 Secure and reliable URL shortening
+- ⚡ Fast and instant link generation
 
-### `npm run eject`
+## 📁 Project Structure
 
-**Note: this is a one-way operation. Once you `eject`, you can't go back!**
+```
+url-shortener-frontend/
+├── src/
+│   ├── assets/          # Images and illustrations
+│   ├── components/      # Reusable components
+│   ├── pages/           # Page components
+│   │   ├── Homepage.jsx
+│   │   ├── login.jsx
+│   │   ├── signup.jsx
+│   │   └── Welcome.jsx
+│   ├── App.jsx          # Main app component with routing
+│   └── index.jsx        # Entry point
+├── public/              # Static assets
+└── package.json         # Dependencies and scripts
+```
 
-If you aren't satisfied with the build tool and configuration choices, you can `eject` at any time. This command will remove the single build dependency from your project.
+## 🎨 Color Palette
 
-Instead, it will copy all the configuration files and the transitive dependencies (webpack, Babel, ESLint, etc) right into your project so you have full control over them. All of the commands except `eject` will still work, but they will point to the copied scripts so you can tweak them. At this point you're on your own.
+- **Background Gradient**: `#E3F2FD` → `#BBDEFB`
+- **Primary Blue**: `#1976D2`
+- **Accent Blue**: `#42A5F5`
+- **White Cards**: `#FFFFFF`
+- **Text Gray**: `#666666`
+- **Success Green**: `#4CAF50`
 
-You don't have to ever use `eject`. The curated feature set is suitable for small and middle deployments, and you shouldn't feel obligated to use this feature. However we understand that this tool wouldn't be useful if you couldn't customize it when you are ready for it.
+## 📝 License
 
-## Learn More
+This project is licensed under the MIT License.
 
-You can learn more in the [Create React App documentation](https://facebook.github.io/create-react-app/docs/getting-started).
-
-To learn React, check out the [React documentation](https://reactjs.org/).
-
-### Code Splitting
-
-This section has moved here: [https://facebook.github.io/create-react-app/docs/code-splitting](https://facebook.github.io/create-react-app/docs/code-splitting)
-
-### Analyzing the Bundle Size
-
-This section has moved here: [https://facebook.github.io/create-react-app/docs/analyzing-the-bundle-size](https://facebook.github.io/create-react-app/docs/analyzing-the-bundle-size)
-
-### Making a Progressive Web App
-
-This section has moved here: [https://facebook.github.io/create-react-app/docs/making-a-progressive-web-app](https://facebook.github.io/create-react-app/docs/making-a-progressive-web-app)
-
-### Advanced Configuration
-
-This section has moved here: [https://facebook.github.io/create-react-app/docs/advanced-configuration](https://facebook.github.io/create-react-app/docs/advanced-configuration)
-
-### Deployment
-
-This section has moved here: [https://facebook.github.io/create-react-app/docs/deployment](https://facebook.github.io/create-react-app/docs/deployment)
-
-### `npm run build` fails to minify
-
-This section has moved here: [https://facebook.github.io/create-react-app/docs/troubleshooting#npm-run-build-fails-to-minify](https://facebook.github.io/create-react-app/docs/troubleshooting#npm-run-build-fails-to-minify)
