@@ -1,21 +1,40 @@
-import React, { useState } from 'react';
-import { Box, Typography, TextField, Button, Paper, IconButton } from '@mui/material';
-import { motion } from 'framer-motion';
-import ContentCopyIcon from '@mui/icons-material/ContentCopy';
-import CheckCircleIcon from '@mui/icons-material/CheckCircle';
+import React, { useState } from "react";
+import {
+  Box,
+  Typography,
+  TextField,
+  Button,
+  Paper,
+  IconButton,
+} from "@mui/material";
+import { motion } from "framer-motion";
+import ContentCopyIcon from "@mui/icons-material/ContentCopy";
+import CheckCircleIcon from "@mui/icons-material/CheckCircle";
+import { useShortenUrl } from "../hooks/useShortenUrl";
 
 const Homepage = () => {
-  const [longUrl, setLongUrl] = useState('');
-  const [customAlias, setCustomAlias] = useState('');
-  const [shortUrl, setShortUrl] = useState('');
+  const [longUrl, setLongUrl] = useState("");
+  const [customAlias, setCustomAlias] = useState("");
+  const [shortUrl, setShortUrl] = useState("");
   const [copied, setCopied] = useState(false);
 
+  const { mutate: shortenUrl, isLoading, error } = useShortenUrl();
+
   const handleGenerateShortLink = () => {
-    if (longUrl) {
-      // Simulate URL shortening
-      const alias = customAlias || Math.random().toString(36).substring(7);
-      setShortUrl(`https://short.link/${alias}`);
-    }
+    if (!longUrl) return;
+
+    shortenUrl(
+      { originalUrl: longUrl, customText: customAlias },
+      {
+        onSuccess: (data) => {
+          // Assuming API returns { shortUrl: "https://short.link/abc123" }
+          setShortUrl(data.shortUrl);
+        },
+        onError: (err) => {
+          console.error("Shortening failed:", err.message);
+        },
+      }
+    );
   };
 
   const handleCopy = () => {
@@ -30,73 +49,79 @@ const Homepage = () => {
     transition: {
       duration: 3,
       repeat: Infinity,
-      ease: "easeInOut"
-    }
+      ease: "easeInOut",
+    },
   };
 
   return (
     <Box
       sx={{
-        minHeight: '100vh',
-        background: 'linear-gradient(135deg, #E3F2FD 0%, #BBDEFB 100%)',
-        display: 'flex',
-        alignItems: 'center',
-        justifyContent: 'center',
-        padding: '2rem',
-        position: 'relative',
-        overflow: 'hidden'
+        minHeight: "100vh",
+        background: "linear-gradient(135deg, #E3F2FD 0%, #BBDEFB 100%)",
+        display: "flex",
+        alignItems: "center",
+        justifyContent: "center",
+        padding: "2rem",
+        position: "relative",
+        overflow: "hidden",
       }}
     >
       {/* Floating Background Elements */}
       <motion.div
         animate={floatingAnimation}
         style={{
-          position: 'absolute',
-          top: '10%',
-          left: '10%',
-          width: '80px',
-          height: '80px',
-          borderRadius: '50%',
-          background: 'rgba(255, 255, 255, 0.3)',
-          zIndex: 0
+          position: "absolute",
+          top: "10%",
+          left: "10%",
+          width: "80px",
+          height: "80px",
+          borderRadius: "50%",
+          background: "rgba(255, 255, 255, 0.3)",
+          zIndex: 0,
         }}
       />
       <motion.div
-        animate={{ ...floatingAnimation, transition: { ...floatingAnimation.transition, delay: 0.5 } }}
+        animate={{
+          ...floatingAnimation,
+          transition: { ...floatingAnimation.transition, delay: 0.5 },
+        }}
         style={{
-          position: 'absolute',
-          top: '60%',
-          right: '15%',
-          width: '60px',
-          height: '60px',
-          borderRadius: '50%',
-          background: 'rgba(255, 255, 255, 0.2)',
-          zIndex: 0
+          position: "absolute",
+          top: "60%",
+          right: "15%",
+          width: "60px",
+          height: "60px",
+          borderRadius: "50%",
+          background: "rgba(255, 255, 255, 0.2)",
+          zIndex: 0,
         }}
       />
       <motion.div
-        animate={{ ...floatingAnimation, transition: { ...floatingAnimation.transition, delay: 1 } }}
+        animate={{
+          ...floatingAnimation,
+          transition: { ...floatingAnimation.transition, delay: 1 },
+        }}
         style={{
-          position: 'absolute',
-          bottom: '20%',
-          left: '20%',
-          width: '100px',
-          height: '100px',
-          borderRadius: '50%',
-          background: 'rgba(255, 255, 255, 0.25)',
-          zIndex: 0
+          position: "absolute",
+          bottom: "20%",
+          left: "20%",
+          width: "100px",
+          height: "100px",
+          borderRadius: "50%",
+          background: "rgba(255, 255, 255, 0.25)",
+          zIndex: 0,
         }}
       />
 
       {/* Main Container */}
       <Box
         sx={{
-          display: 'flex',
-          gap: '2rem',
-          maxWidth: '1200px',
-          width: '100%',
+          display: "flex",
+          gap: "2rem",
+          maxWidth: "1200px",
+          width: "100%",
           zIndex: 1,
-          flexDirection: { xs: 'column', md: 'row' }
+          flexDirection: { xs: "column", md: "row" },
         }}
       >
         {/* Left Card - Intro */}
@@ -109,25 +134,25 @@ const Homepage = () => {
           <Paper
             elevation={3}
             sx={{
-              padding: '3rem',
-              borderRadius: '24px',
-              background: 'white',
-              boxShadow: '0 8px 32px rgba(0, 0, 0, 0.08)',
-              height: '100%',
-              display: 'flex',
-              flexDirection: 'column',
-              alignItems: 'center',
-              justifyContent: 'center',
-              textAlign: 'center'
+              padding: "3rem",
+              borderRadius: "24px",
+              background: "white",
+              boxShadow: "0 8px 32px rgba(0, 0, 0, 0.08)",
+              height: "100%",
+              display: "flex",
+              flexDirection: "column",
+              alignItems: "center",
+              justifyContent: "center",
+              textAlign: "center",
             }}
           >
             <Typography
               variant="h3"
               sx={{
                 fontWeight: 700,
-                color: '#1976D2',
-                marginBottom: '1rem',
-                fontFamily: "'Inter', sans-serif"
+                color: "#1976D2",
+                marginBottom: "1rem",
+                fontFamily: "'Inter', sans-serif",
               }}
             >
               Shorten Your Links
@@ -135,9 +160,9 @@ const Homepage = () => {
             <Typography
               variant="h6"
               sx={{
-                color: '#666',
-                marginBottom: '2rem',
-                fontWeight: 400
+                color: "#666",
+                marginBottom: "2rem",
+                fontWeight: 400,
               }}
             >
               Fast, secure & reliable URL shortener
@@ -149,41 +174,55 @@ const Homepage = () => {
               src="/src/assets/shortener_illustration.png"
               alt="URL Shortener Illustration"
               sx={{
-                width: '100%',
-                maxWidth: '350px',
-                marginBottom: '2rem'
+                width: "100%",
+                maxWidth: "350px",
+                marginBottom: "2rem",
               }}
             />
 
-            <Box sx={{ display: 'flex', gap: '1rem', flexWrap: 'wrap', justifyContent: 'center' }}>
-              <motion.div whileHover={{ scale: 1.05 }} whileTap={{ scale: 0.95 }}>
+            <Box
+              sx={{
+                display: "flex",
+                gap: "1rem",
+                flexWrap: "wrap",
+                justifyContent: "center",
+              }}
+            >
+              <motion.div
+                whileHover={{ scale: 1.05 }}
+                whileTap={{ scale: 0.95 }}
+              >
                 <Button
                   variant="outlined"
                   sx={{
-                    borderRadius: '24px',
-                    padding: '0.75rem 2rem',
-                    borderColor: '#1976D2',
-                    color: '#1976D2',
+                    borderRadius: "24px",
+                    padding: "0.75rem 2rem",
+                    borderColor: "#1976D2",
+                    color: "#1976D2",
                     fontWeight: 600,
-                    textTransform: 'none',
-                    fontSize: '1rem'
+                    textTransform: "none",
+                    fontSize: "1rem",
                   }}
                 >
                   Get Started
                 </Button>
               </motion.div>
-              <motion.div whileHover={{ scale: 1.05 }} whileTap={{ scale: 0.95 }}>
+              <motion.div
+                whileHover={{ scale: 1.05 }}
+                whileTap={{ scale: 0.95 }}
+              >
                 <Button
                   variant="contained"
                   sx={{
-                    borderRadius: '24px',
-                    padding: '0.75rem 2rem',
-                    background: 'linear-gradient(135deg, #42A5F5 0%, #1976D2 100%)',
-                    color: 'white',
+                    borderRadius: "24px",
+                    padding: "0.75rem 2rem",
+                    background:
+                      "linear-gradient(135deg, #42A5F5 0%, #1976D2 100%)",
+                    color: "white",
                     fontWeight: 600,
-                    textTransform: 'none',
-                    fontSize: '1rem',
-                    boxShadow: '0 4px 12px rgba(25, 118, 210, 0.3)'
+                    textTransform: "none",
+                    fontSize: "1rem",
+                    boxShadow: "0 4px 12px rgba(25, 118, 210, 0.3)",
                   }}
                 >
                   Shorten URL
@@ -203,20 +242,20 @@ const Homepage = () => {
           <Paper
             elevation={3}
             sx={{
-              padding: '3rem',
-              borderRadius: '24px',
-              background: 'white',
-              boxShadow: '0 8px 32px rgba(0, 0, 0, 0.08)',
-              height: '100%'
+              padding: "3rem",
+              borderRadius: "24px",
+              background: "white",
+              boxShadow: "0 8px 32px rgba(0, 0, 0, 0.08)",
+              height: "100%",
             }}
           >
             <Typography
               variant="h4"
               sx={{
                 fontWeight: 700,
-                color: '#1976D2',
-                marginBottom: '0.5rem',
-                fontFamily: "'Inter', sans-serif"
+                color: "#1976D2",
+                marginBottom: "0.5rem",
+                fontFamily: "'Inter', sans-serif",
               }}
             >
               URL Shortener
@@ -224,8 +263,8 @@ const Homepage = () => {
             <Typography
               variant="body1"
               sx={{
-                color: '#666',
-                marginBottom: '2rem'
+                color: "#666",
+                marginBottom: "2rem",
               }}
             >
               Paste your long URL below
@@ -238,16 +277,16 @@ const Homepage = () => {
               value={longUrl}
               onChange={(e) => setLongUrl(e.target.value)}
               sx={{
-                marginBottom: '1.5rem',
-                '& .MuiOutlinedInput-root': {
-                  borderRadius: '16px',
-                  '&:hover fieldset': {
-                    borderColor: '#42A5F5'
+                marginBottom: "1.5rem",
+                "& .MuiOutlinedInput-root": {
+                  borderRadius: "16px",
+                  "&:hover fieldset": {
+                    borderColor: "#42A5F5",
                   },
-                  '&.Mui-focused fieldset': {
-                    borderColor: '#1976D2'
-                  }
-                }
+                  "&.Mui-focused fieldset": {
+                    borderColor: "#1976D2",
+                  },
+                },
               }}
             />
 
@@ -258,16 +297,16 @@ const Homepage = () => {
               value={customAlias}
               onChange={(e) => setCustomAlias(e.target.value)}
               sx={{
-                marginBottom: '2rem',
-                '& .MuiOutlinedInput-root': {
-                  borderRadius: '16px',
-                  '&:hover fieldset': {
-                    borderColor: '#42A5F5'
+                marginBottom: "2rem",
+                "& .MuiOutlinedInput-root": {
+                  borderRadius: "16px",
+                  "&:hover fieldset": {
+                    borderColor: "#42A5F5",
                   },
-                  '&.Mui-focused fieldset': {
-                    borderColor: '#1976D2'
-                  }
-                }
+                  "&.Mui-focused fieldset": {
+                    borderColor: "#1976D2",
+                  },
+                },
               }}
             />
 
@@ -278,15 +317,16 @@ const Homepage = () => {
                 variant="contained"
                 onClick={handleGenerateShortLink}
                 sx={{
-                  borderRadius: '16px',
-                  padding: '1rem',
-                  background: 'linear-gradient(135deg, #42A5F5 0%, #1976D2 100%)',
-                  color: 'white',
+                  borderRadius: "16px",
+                  padding: "1rem",
+                  background:
+                    "linear-gradient(135deg, #42A5F5 0%, #1976D2 100%)",
+                  color: "white",
                   fontWeight: 600,
-                  textTransform: 'none',
-                  fontSize: '1.1rem',
-                  marginBottom: '2rem',
-                  boxShadow: '0 4px 12px rgba(25, 118, 210, 0.3)'
+                  textTransform: "none",
+                  fontSize: "1.1rem",
+                  marginBottom: "2rem",
+                  boxShadow: "0 4px 12px rgba(25, 118, 210, 0.3)",
                 }}
               >
                 Generate Short Link
@@ -302,21 +342,21 @@ const Homepage = () => {
               >
                 <Box
                   sx={{
-                    background: '#F5F5F5',
-                    borderRadius: '16px',
-                    padding: '1.5rem',
-                    display: 'flex',
-                    alignItems: 'center',
-                    justifyContent: 'space-between',
-                    marginBottom: '1rem'
+                    background: "#F5F5F5",
+                    borderRadius: "16px",
+                    padding: "1.5rem",
+                    display: "flex",
+                    alignItems: "center",
+                    justifyContent: "space-between",
+                    marginBottom: "1rem",
                   }}
                 >
                   <Typography
                     sx={{
-                      color: '#1976D2',
+                      color: "#1976D2",
                       fontWeight: 600,
-                      fontSize: '1rem',
-                      wordBreak: 'break-all'
+                      fontSize: "1rem",
+                      wordBreak: "break-all",
                     }}
                   >
                     {shortUrl}
@@ -328,8 +368,8 @@ const Homepage = () => {
                     <IconButton
                       onClick={handleCopy}
                       sx={{
-                        color: copied ? '#4CAF50' : '#1976D2',
-                        marginLeft: '1rem'
+                        color: copied ? "#4CAF50" : "#1976D2",
+                        marginLeft: "1rem",
                       }}
                     >
                       {copied ? <CheckCircleIcon /> : <ContentCopyIcon />}
@@ -343,9 +383,9 @@ const Homepage = () => {
             <Typography
               variant="caption"
               sx={{
-                color: '#999',
-                display: 'block',
-                textAlign: 'center'
+                color: "#999",
+                display: "block",
+                textAlign: "center",
               }}
             >
               Free & instant link shortening
@@ -358,4 +398,3 @@ const Homepage = () => {
 };
 
 export default Homepage;
-

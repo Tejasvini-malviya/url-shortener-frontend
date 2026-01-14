@@ -2,18 +2,19 @@ import React, { useState } from "react";
 import { Box, Button, TextField, Typography, Paper } from "@mui/material";
 import { motion } from "framer-motion";
 import { useNavigate } from "react-router-dom";
+import { useLogin } from "../hooks/useAuth";
 
 const Login = () => {
   const navigate = useNavigate();
   const [email, setEmail] = useState("");
   const [password, setPassword] = useState("");
 
+  const { mutate: login, isLoading, isError, error } = useLogin();
+
   const handleLogin = (e) => {
     e.preventDefault();
-    // Simulate login - navigate to homepage
-    navigate("/home");
+    login({ email, password });
   };
-
   // Floating elements animation
   const floatingAnimation = {
     y: [0, -20, 0],
@@ -174,6 +175,7 @@ const Login = () => {
                 fullWidth
                 type="submit"
                 variant="contained"
+                disabled={isLoading}
                 sx={{
                   borderRadius: "16px",
                   padding: "1rem",
@@ -187,7 +189,7 @@ const Login = () => {
                   boxShadow: "0 4px 12px rgba(25, 118, 210, 0.3)",
                 }}
               >
-                Log In
+                {isLoading ? "Logging In... (Server may take 10-30s on first request)" : "Log In"}
               </Button>
             </motion.div>
 
